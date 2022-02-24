@@ -38,7 +38,12 @@ function validateCred(cardArray) {
   }).reduce((acc, cur) => acc + cur) % 10 === 0;
 }
 
-// Test your function below:
+function findInvalidCards(nestedCardsArray) {
+  return nestedCardsArray.filter( cardArray => !validateCred(cardArray) );
+}
+// Test your functions below:
+
+/* Test function validateCred()
 console.log(validateCred(valid1)); // shall return true
 console.log(validateCred(valid2)); // shall return true
 console.log(validateCred(valid3)); // shall return true
@@ -54,7 +59,11 @@ console.log(validateCred(mystery2));
 console.log(validateCred(mystery3));
 console.log(validateCred(mystery4));
 console.log(validateCred(mystery5));
+*/
 
+/* Test function findInvalidCards()
+console.log(findInvalidCards(batch));
+*/
 
 
 
