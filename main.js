@@ -41,6 +41,19 @@ function validateCred(cardArray) {
 function findInvalidCards(nestedCardsArray) {
   return nestedCardsArray.filter( cardArray => !validateCred(cardArray) );
 }
+
+function idInvalidCardCompanies(nestedCardsArray) {
+  const companyTable = {3: "Amex (American Express)", 4: "Visa", 5: "Mastercard", 6: "Discover"};
+  const invalidCompanies = [];
+  nestedCardsArray.forEach( cardArray => {
+    const company = companyTable[cardArray[0]] || "Company not found" ;
+    if (!invalidCompanies.includes(company)) {
+      invalidCompanies.push(company);
+    }
+  });
+  return invalidCompanies.sort();
+}
+
 // Test your functions below:
 
 /* Test function validateCred()
@@ -64,6 +77,13 @@ console.log(validateCred(mystery5));
 /* Test function findInvalidCards()
 console.log(findInvalidCards(batch));
 */
+
+/* Test function idInvalidCardCompanies() */
+const testNested = findInvalidCards(batch);
+testNested.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
+console.log(idInvalidCardCompanies(testNested));
+
+
 
 
 
