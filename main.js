@@ -22,8 +22,15 @@ const mystery5 = [4, 9, 1, 3, 5, 4, 0, 4, 6, 3, 0, 7, 2, 5, 2, 3]
 // An array of all the arrays above
 const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, invalid3, invalid4, invalid5, mystery1, mystery2, mystery3, mystery4, mystery5]
 
-
 // Add your functions below:
+function generateCardFromStringToArray(cardString) {
+  return cardString.split('');
+}
+
+function generateCardFromArrayToString(cardArray) {
+  return cardArray.join('');
+}
+
 function validateCred(cardArray) {
   const length = cardArray.length;
   const reverseArray = cardArray.map((digit, index) => cardArray[(length - 1) - index ]);
@@ -42,11 +49,36 @@ function findInvalidCards(nestedCardsArray) {
   return nestedCardsArray.filter( cardArray => !validateCred(cardArray) );
 }
 
+function idCompanyFromCard(cardArray) {
+  let companyFound = "Company not found";
+  const cardString = generateCardFromArrayToString(cardArray);
+  const companyTable = {
+    "American Express": [34, 37],
+    "Diners CLub - Carte Blanche": [300, 301, 302, 303, 304, 305],
+    "Diners CLub - International": [36],
+    "Diners Club - USA & Canada": [54],
+    "Discover": [6011, 622, 644, 645, 647, 648, 649, 65],
+    "InstaPayment": [603, 638, 639],
+    "JCB": [35],
+    "Maestro": [5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763],
+    "MasterCard": [51, 52, 53, 54, 55, 22, 23, 24, 25, 26, 27],
+    "Visa": [4],
+    "Visa Electron": [4026, 417500, 4508, 4844, 4913, 4917]
+  };
+  for (const [key, values] of Object.entries(companyTable)) {
+    values.forEach(value => { 
+      if (cardString.indexOf(value.toString()) === 0) {
+        companyFound = key;
+      }
+    })
+  }
+  return companyFound;
+}
+
 function idInvalidCardCompanies(nestedCardsArray) {
-  const companyTable = {3: "Amex (American Express)", 4: "Visa", 5: "Mastercard", 6: "Discover"};
   const invalidCompanies = [];
   nestedCardsArray.forEach( cardArray => {
-    const company = companyTable[cardArray[0]] || "Company not found" ;
+    const company = idCompanyFromCard(cardArray); // companyTable[cardArray[0]] || "Company not found" ;
     if (!invalidCompanies.includes(company)) {
       invalidCompanies.push(company);
     }
@@ -55,6 +87,10 @@ function idInvalidCardCompanies(nestedCardsArray) {
 }
 
 // Test your functions below:
+/* Test function generateCardFromStringToArray()
+console.log(generateCardFromStringToArray('1234567890123456'));
+console.log(generateCardFromArrayToString(generateCardFromStringToArray('1234567890123456')));
+*/
 
 /* Test function validateCred()
 console.log(validateCred(valid1)); // shall return true
@@ -82,8 +118,3 @@ console.log(findInvalidCards(batch));
 const testNested = findInvalidCards(batch);
 testNested.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]);
 console.log(idInvalidCardCompanies(testNested));
-
-
-
-
-
