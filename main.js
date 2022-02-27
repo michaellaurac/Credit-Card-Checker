@@ -30,14 +30,19 @@ const batch = [valid1, valid2, valid3, valid4, valid5, valid6, valid7, valid8, v
 
 // Add your functions below:
 function generateCardFromStringToArray(cardString) {
+  // takes a string of digits and converts it into an array of single digits
   return cardString.split('').map( char => parseInt(char) );
 }
 
 function generateCardFromArrayToString(cardArray) {
+  // takes an array of single digits and converts it into a string of digits
   return cardArray.join('');
 }
 
 function validateCred(cardArray) {
+  // returns a boolean corresponding to the validity of a credit card number
+  // provided as a string of digits or as an array of single digits. The algorithme
+  // used was the Luhn algorithm.
   if (typeof cardArray === 'string') {
     cardArray = generateCardFromStringToArray(cardArray);
   }
@@ -55,10 +60,13 @@ function validateCred(cardArray) {
 }
 
 function findInvalidCards(nestedCardsArray) {
+  // returns a filtered array of invalid creait card numbers when provided with an array of credit card numbers
   return nestedCardsArray.filter( cardArray => !validateCred(cardArray) );
 }
 
 function idCompanyFromCard(cardArray) {
+  // returns the name of the credit card issuing company based on the credit card number.
+  // "Company not found" is returned when no company is found
   if (typeof cardArray === 'string') {
     cardArray = generateCardFromStringToArray(cardArray);
   }
@@ -88,13 +96,15 @@ function idCompanyFromCard(cardArray) {
 }
 
 function displayValidityAndCompany(cardArray) {
+  // Given a credit card number, logs to the console whether the card is valid or invalid and adds the credit card issuing company int brackets
   console.log("The credit card is " + (validateCred(cardArray) ? "valid" : "invalid") + " (" + idCompanyFromCard(cardArray) + ").");
 }
 
 function idInvalidCardCompanies(nestedCardsArray) {
+  // Provided with an array of credit card numbers returns an array of the unique corresponding credit card issuing companies
   const invalidCompanies = [];
   nestedCardsArray.forEach( cardArray => {
-    const company = idCompanyFromCard(cardArray); // companyTable[cardArray[0]] || "Company not found" ;
+    const company = idCompanyFromCard(cardArray);
     if (!invalidCompanies.includes(company)) {
       invalidCompanies.push(company);
     }
@@ -109,22 +119,22 @@ console.log(generateCardFromArrayToString(generateCardFromStringToArray('1234567
 */
 
 /* Test function validateCred() */
-displayValidityAndCompany(valid1);
-displayValidityAndCompany(valid2);
-displayValidityAndCompany(valid3);
-displayValidityAndCompany(valid4);
-displayValidityAndCompany(valid5);
-displayValidityAndCompany(valid6);
-displayValidityAndCompany(valid7);
-displayValidityAndCompany(valid8);
-displayValidityAndCompany(valid9);
-displayValidityAndCompany(valid10);
+displayValidityAndCompany(valid1); // shall return valid
+displayValidityAndCompany(valid2); // shall return valid
+displayValidityAndCompany(valid3); // shall return valid
+displayValidityAndCompany(valid4); // shall return valid
+displayValidityAndCompany(valid5); // shall return valid
+displayValidityAndCompany(valid6); // shall return valid
+displayValidityAndCompany(valid7); // shall return valid
+displayValidityAndCompany(valid8); // shall return valid
+displayValidityAndCompany(valid9); // shall return valid
+displayValidityAndCompany(valid10); // shall return valid
 
-displayValidityAndCompany(invalid1); // shall return false
-displayValidityAndCompany(invalid2); // shall return false
-displayValidityAndCompany(invalid3); // shall return false
-displayValidityAndCompany(invalid4); // shall return false
-displayValidityAndCompany(invalid5); // shall return false
+displayValidityAndCompany(invalid1); // shall return invalid
+displayValidityAndCompany(invalid2); // shall return invalid
+displayValidityAndCompany(invalid3); // shall return invalid
+displayValidityAndCompany(invalid4); // shall return invalid
+displayValidityAndCompany(invalid5); // shall return invalid
 
 displayValidityAndCompany(mystery1);
 displayValidityAndCompany(mystery2);
